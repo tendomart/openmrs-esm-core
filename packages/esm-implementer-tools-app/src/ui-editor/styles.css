@@ -1,0 +1,25 @@
+.slotOverlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #8af6f726;
+  border: 1px solid #a9bdbd;
+}
+
+/* 
+const slotStyle = {
+  backgroundColor: "rgba(43, 43, 185, 0.1)",
+  position: "relative",
+  border: "1px solid rgba(43, 43, 185, 0.4)",
+  margin: "-1px", // accomodates the border
+};
+
+const slotNameStyle = {
+  backgroundColor: "rgb(255 255 255 / 71%)",
+  border: "1px solid rgba(43, 43, 185, 0.4)",
+  color: "#393939",
+  position: "absolute",
+  bottom: "-1px",
+  right: "-1px",
+  padding: "0.5em 0.5em 0.5em 0.5em",
+}; */

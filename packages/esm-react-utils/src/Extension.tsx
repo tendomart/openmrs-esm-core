@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
-import { TooltipIcon } from "carbon-components-react";
-import { renderExtension, getIsUIEditorEnabled } from "@openmrs/esm-extensions";
+import { renderExtension } from "@openmrs/esm-extensions";
 import { ExtensionContext } from "./ExtensionContext";
 
 export interface ExtensionProps {
@@ -44,13 +43,5 @@ export const Extension: React.FC<ExtensionProps> = ({ state }) => {
     extensionId,
   ]);
 
-  return getIsUIEditorEnabled() ? (
-    <TooltipIcon tooltipText={extensionId} align="center" direction="top">
-      <div>
-        <slot ref={ref} />
-      </div>
-    </TooltipIcon>
-  ) : (
-    <slot ref={ref} />
-  );
+  return <slot style={{ position: "relative" }} ref={ref} />;
 };
