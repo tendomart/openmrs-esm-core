@@ -1,8 +1,5 @@
 import React, { CSSProperties, ReactNode, useRef } from "react";
-import {
-  getIsUIEditorEnabled,
-  getExtensionRegistration,
-} from "@openmrs/esm-extensions";
+import { getExtensionRegistration } from "@openmrs/esm-extensions";
 import { ExtensionContext } from "./ExtensionContext";
 import { Extension } from "./Extension";
 import { useExtensionSlot } from "./useExtensionSlot";

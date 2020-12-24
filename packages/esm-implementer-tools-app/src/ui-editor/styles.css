@@ -1,25 +1,81 @@
 .slotOverlay {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-color: #8af6f726;
-  border: 1px solid #a9bdbd;
+  background-color: rgba(43, 43, 185, 0.1);
+  border: 1px solid rgba(43, 43, 185, 0.4);
+  pointer-events: none;
 }
 
-/* 
-const slotStyle = {
-  backgroundColor: "rgba(43, 43, 185, 0.1)",
-  position: "relative",
-  border: "1px solid rgba(43, 43, 185, 0.4)",
-  margin: "-1px", // accomodates the border
-};
+.slotName {
+  background-color: rgb(255, 255, 255, 71%);
+  border: 1px solid rgba(43, 43, 185, 0.4);
+  color: #393939;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  pointer-events: none;
+}
 
-const slotNameStyle = {
-  backgroundColor: "rgb(255 255 255 / 71%)",
-  border: "1px solid rgba(43, 43, 185, 0.4)",
-  color: "#393939",
-  position: "absolute",
-  bottom: "-1px",
-  right: "-1px",
-  padding: "0.5em 0.5em 0.5em 0.5em",
-}; */
+.extensionOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+}
+
+.extensionOverlay:hover {
+  background-color: rgba(43, 43, 185, 0.1);
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.extensionOverlay:focus .extensionTooltip,
+.extensionOverlay:hover .extensionTooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Unfortunately, we have to use this custom tooltip instead of the
+   Carbon Components Tooltip because of the weird positioning hacks */
+.extensionTooltip {
+  visibility: hidden;
+  width: auto;
+  background-color: var(--cds-inverse-02, #393939);
+  color: #fff;
+  text-align: center;
+  padding: 3px 16px;
+  border-radius: 2px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 10000;
+  bottom: calc(100% + 13px);
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+/* Tooltip arrow */
+.extensionTooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--cds-inverse-02, #393939) transparent transparent
+    transparent;
+}

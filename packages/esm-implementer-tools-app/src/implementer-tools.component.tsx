@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { UserHasAccess } from "@openmrs/esm-react-utils";
 import { connect, Provider } from "unistore/react";
 import { getIsUIEditorEnabled } from "@openmrs/esm-extensions";
+import { UserHasAccess } from "@openmrs/esm-react-utils";
 import Popup from "./popup/popup.component";
 import styles from "./implementer-tools.styles.css";
 import "./backend-dependencies/openmrs-backend-dependencies";
@@ -30,7 +30,6 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
 
   return (
     <>
-      {" "}
       <button
         tabIndex={0}
         onClick={togglePopup}

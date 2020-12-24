@@ -43,5 +43,9 @@ export const Extension: React.FC<ExtensionProps> = ({ state }) => {
     extensionId,
   ]);
 
-  return <slot style={{ position: "relative" }} ref={ref} />;
+  return (
+    <div style={{ position: "relative" }}>
+      <slot ref={ref} />
+    </div>
+  );
 };
