@@ -1,5 +1,5 @@
 import { mountRootParcel } from "single-spa";
-import { set } from "lodash-es";
+import { cloneDeep, set } from "lodash-es";
 import { getExtensionRegistration } from "./extensions";
 import { getActualRouteProps } from "./route";
 import { updateExtensionStore } from "./store";
@@ -62,7 +62,7 @@ export function renderExtension(
 
       updateExtensionStore((state) =>
         set(
-          state,
+          cloneDeep(state),
           [
             "extensions",
             extensionName,

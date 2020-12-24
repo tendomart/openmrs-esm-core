@@ -41,6 +41,7 @@ export const Extension: React.FC<ExtensionProps> = ({ state }) => {
     attachedExtensionSlotName,
     extensionSlotModuleName,
     extensionId,
+    ref.current,
   ]);
 
   return (

@@ -20,11 +20,14 @@ export type ConfigurationProps = {
 const actions = {
   toggleIsUIEditorEnabled({ isUIEditorEnabled }: ImplementerToolsStore) {
     return { isUIEditorEnabled: !isUIEditorEnabled };
-  }
-}
+  },
+};
 
-export function Configuration ({ setHasAlert }: ConfigurationProps) {
-  const { isUIEditorEnabled, toggleIsUIEditorEnabled } = useStore(["isUIEditorEnabled"], actions);
+export function Configuration({ setHasAlert }: ConfigurationProps) {
+  const { isUIEditorEnabled, toggleIsUIEditorEnabled } = useStore(
+    ["isUIEditorEnabled"],
+    actions
+  );
   const [config, setConfig] = useState({});
   const [isDevConfigActive, setIsDevConfigActive] = useState(
     getAreDevDefaultsOn()
@@ -98,4 +101,4 @@ export function Configuration ({ setHasAlert }: ConfigurationProps) {
       </Grid>
     </div>
   );
-};
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { connect, Provider } from "unistore/react";
+import { Provider } from "unistore/react";
 import { UserHasAccess } from "@openmrs/esm-react-utils";
 import Popup from "./popup/popup.component";
 import styles from "./implementer-tools.styles.css";
@@ -19,9 +19,12 @@ export default function ImplementerTools() {
   );
 }
 
-function PopupHandler () {
+function PopupHandler() {
   const [hasAlert, setHasAlert] = useState(false);
-  const { isOpen, isUIEditorEnabled } = useStore(["isOpen", "isUIEditorEnabled"])
+  const { isOpen, isUIEditorEnabled } = useStore([
+    "isOpen",
+    "isUIEditorEnabled",
+  ]);
 
   function togglePopup() {
     getStore().setState({ isOpen: !isOpen });
@@ -40,4 +43,4 @@ function PopupHandler () {
       {isUIEditorEnabled ? <UiEditor /> : null}
     </>
   );
-};
+}
