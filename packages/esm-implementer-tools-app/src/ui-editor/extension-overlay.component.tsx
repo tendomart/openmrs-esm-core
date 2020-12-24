@@ -15,7 +15,6 @@ export function ExtensionOverlay({
   slotName,
   domElement,
 }: ExtensionOverlayProps) {
-  const [extensionDomElement, setExtensionDomElement] = useState<HTMLElement>();
   const [overlayDomElement, setOverlayDomElement] = useState<HTMLElement>();
 
   useEffect(() => {
@@ -23,7 +22,6 @@ export function ExtensionOverlay({
       const newOverlayDomElement = document.createElement("div");
       domElement.parentElement?.appendChild(newOverlayDomElement);
       setOverlayDomElement(newOverlayDomElement);
-      setExtensionDomElement(extensionDomElement);
     }
   }, [domElement]);
 

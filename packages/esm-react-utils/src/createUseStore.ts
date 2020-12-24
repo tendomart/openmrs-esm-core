@@ -11,8 +11,7 @@ function runReducer<T>(state: T, reducer: Reducer) {
   const out = {};
   if (typeof reducer === "string") {
     out[reducer] = state[reducer];
-  }
-  if (Array.isArray(reducer)) {
+  } else if (Array.isArray(reducer)) {
     for (let i of reducer) {
       out[i] = state[i];
     }

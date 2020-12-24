@@ -45,6 +45,9 @@ export const Extension: React.FC<ExtensionProps> = ({ state }) => {
   ]);
 
   return (
+    // The extension is rendered into the `<slot>`. It is surrounded by a
+    // `<div>` with relative positioning in order to allow the UI Editor
+    // to absolutely position elements within it.
     <div style={{ position: "relative" }}>
       <slot ref={ref} />
     </div>

@@ -41,8 +41,6 @@
   opacity: 1;
 }
 
-/* Unfortunately, we have to use this custom tooltip instead of the
-   Carbon Components Tooltip because of the weird positioning hacks */
 .extensionTooltip {
   visibility: hidden;
   width: auto;
@@ -51,9 +49,7 @@
   padding: 0.5em 0.5em 0.5em 0.5em;
   border: 1px solid rgba(43, 43, 185, 0.4);
 
-  /* Position the tooltip text */
   position: absolute;
-  /* z-index: 10000; */
   top: 0;
   left: 0;
 }
