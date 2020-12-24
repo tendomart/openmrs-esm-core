@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ExtensionSlotInfo,
   ExtensionInfo,
@@ -9,7 +9,6 @@ import { createPortal } from "react-dom";
 import { Provider, connect } from "unistore/react";
 import { cloneDeep, set } from "lodash-es";
 import styles from "./styles.css";
-import { Tooltip, TooltipIcon } from "carbon-components-react";
 
 export function UiEditor() {
   return (
@@ -34,6 +33,37 @@ const Overlays = connect(["slots", "extensions"])(
       {}
     );
 
+    const [observers, setObservers] = useState<Array<MutationObserver>>([]);
+
+    // Create the DOM nodes for the extension overlays to attach to
+    const forceUpdateIfNoNode = useCallback(([extensionName, slotModuleName, slotName]) => {
+        return function(mutationsList, observer) {
+          for (let mutation of mutationsList) {
+            console.log(mutation);
+            if (mutation.removedNodes.length) {
+              const extensionInstance = extensionStore.getState().extensions[extensionName]?.[slotModuleName]?.[slotName];
+              console.log(extensionName, slotModuleName, slotName, mutation.removedNodes[0], extensionOverlayDomElements, extensionInstance);
+              if (extensionInstance) {
+                const newDomElement = document.createElement("div");
+                const newObserver = new MutationObserver(forceUpdateIfNoNode([extensionName, slotModuleName, slotName]));
+                newObserver.observe(newDomElement, { childList: true });
+                setObservers(observers => [...observers, newObserver]);
+                extensionInstance.domElement.parentElement?.appendChild(
+                  newDomElement
+                );
+                set(
+                  cloneDeep(extensionOverlayDomElements),
+                  [extensionName, slotModuleName, slotName],
+                  newDomElement
+                );
+              }
+              observer.disconnect();
+            } 
+          }
+        }
+      }
+    , [extensionOverlayDomElements]);
+
     useEffect(() => {
       function update({ extensions }: ExtensionStore) {
         const newExtensionOverlayDomElements = cloneDeep(
@@ -47,6 +77,9 @@ const Overlays = connect(["slots", "extensions"])(
               bySlotName
             )) {
               const newDomElement = document.createElement("div");
+              const observer = new MutationObserver(forceUpdateIfNoNode([extensionName, slotModuleName, slotName]));
+              observer.observe(newDomElement, { childList: true });
+              observers.push(observer);
               extensionInstance.domElement.parentElement?.appendChild(
                 newDomElement
               );
@@ -62,11 +95,14 @@ const Overlays = connect(["slots", "extensions"])(
       }
       update(extensionStore.getState());
       extensionStore.subscribe(update);
+      () => observers.forEach(o => o.disconnect());
     }, []);
+
+    console.log(extensionOverlayDomElements);
 
     return (
       <>
-        {Object.entries(slots).map(([slotName, slotInfo]) =>
+        {slots ? Object.entries(slots).map(([slotName, slotInfo]) =>
           Object.entries(slotInfo.instances).map(
             ([slotModuleName, slotInstance]) => (
               <Portal
@@ -77,8 +113,8 @@ const Overlays = connect(["slots", "extensions"])(
               </Portal>
             )
           )
-        )}
-        {Object.entries(extensions).map(([extensionName, extensionInfo]) =>
+        ) : null}
+        {extensions ? Object.entries(extensions).map(([extensionName, extensionInfo]) =>
           Object.entries(extensionInfo.instances).map(
             ([slotModuleName, bySlotName]) =>
               Object.entries(bySlotName).map(
@@ -90,11 +126,7 @@ const Overlays = connect(["slots", "extensions"])(
                   return overlayDomNode ? (
                     <Portal
                       key={`extension-overlay-${slotModuleName}-${slotName}-${extensionName}`}
-                      el={
-                        extensionOverlayDomElements[extensionName][
-                          slotModuleName
-                        ][slotName]
-                      }
+                      el={overlayDomNode}
                     >
                       <ExtensionOverlay extensionId={extensionName} />
                     </Portal>
@@ -102,7 +134,7 @@ const Overlays = connect(["slots", "extensions"])(
                 }
               )
           )
-        )}
+        ) : null }
       </>
     );
   }

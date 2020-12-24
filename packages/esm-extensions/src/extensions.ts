@@ -281,20 +281,6 @@ export function getExtensionSlotsForModule(moduleName: string) {
   );
 }
 
-const uiEditorSettingKey = "openmrs:isUIEditorEnabled";
-
-export function getIsUIEditorEnabled(): boolean {
-  try {
-    return JSON.parse(localStorage.getItem(uiEditorSettingKey) ?? "false");
-  } catch {
-    return false;
-  }
-}
-
-export function setIsUIEditorEnabled(enabled: boolean) {
-  localStorage.setItem(uiEditorSettingKey, JSON.stringify(enabled));
-}
-
 /**
  * @internal
  * Just for testing.

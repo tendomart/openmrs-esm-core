@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Tabs, Tab } from "carbon-components-react";
 import { Close16 } from "@carbon/icons-react";
 import styles from "./popup.styles.css";
-import Configuration from "../configuration/configuration.component";
+import { Configuration } from "../configuration/configuration.component";
 import BackendModule from "../backend-dependencies/backend-dependecies.component";
 
 export default function Popup(props: DevToolsPopupProps) {

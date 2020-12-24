@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect, Provider } from "unistore/react";
-import { getIsUIEditorEnabled } from "@openmrs/esm-extensions";
 import { UserHasAccess } from "@openmrs/esm-react-utils";
 import Popup from "./popup/popup.component";
 import styles from "./implementer-tools.styles.css";
 import "./backend-dependencies/openmrs-backend-dependencies";
-import { getStore } from "./store";
+import { getStore, useStore } from "./store";
 import { UiEditor } from "./ui-editor/ui-editor";
 
 export default function ImplementerTools() {
@@ -20,9 +19,9 @@ export default function ImplementerTools() {
   );
 }
 
-const PopupHandler = connect("isOpen")(({ isOpen }) => {
+function PopupHandler () {
   const [hasAlert, setHasAlert] = useState(false);
-  const isUIEditorActive = getIsUIEditorEnabled();
+  const { isOpen, isUIEditorEnabled } = useStore(["isOpen", "isUIEditorEnabled"])
 
   function togglePopup() {
     getStore().setState({ isOpen: !isOpen });
@@ -38,7 +37,7 @@ const PopupHandler = connect("isOpen")(({ isOpen }) => {
         }`}
       />
       {isOpen ? <Popup close={togglePopup} setHasAlert={setHasAlert} /> : null}
-      {isUIEditorActive ? <UiEditor /> : null}
+      {isUIEditorEnabled ? <UiEditor /> : null}
     </>
   );
-});
+};
